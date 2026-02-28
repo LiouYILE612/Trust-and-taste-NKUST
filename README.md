@@ -1,708 +1,708 @@
-# \# 🔐 Trust-and-Taste
+### \# 🔐 Trust-and-Taste
 
-# 
+### 
 
-# > \*\*MPT Issuance · AI-Powered Ordering · Smart Locker Redemption\*\*
+### > \*\*MPT Issuance · AI-Powered Ordering · Smart Locker Redemption\*\*
 
-# > Built on XRPL · Powered by Xaman (XUMM) · AI by OpenAI
+### > Built on XRPL · Powered by Xaman (XUMM) · AI by OpenAI
 
-# 
+### 
 
-# \[!\[Node.js](https://img.shields.io/badge/Node.js-ESM%20%2F%20CJS-green?logo=node.js)](https://nodejs.org)
+### \[!\[Node.js](https://img.shields.io/badge/Node.js-ESM%20%2F%20CJS-green?logo=node.js)](https://nodejs.org)
 
-# \[!\[XRPL](https://img.shields.io/badge/XRPL-Testnet%20%2F%20Mainnet-blue?logo=xrp)](https://xrpl.org)
+### \[!\[XRPL](https://img.shields.io/badge/XRPL-Testnet%20%2F%20Mainnet-blue?logo=xrp)](https://xrpl.org)
 
-# \[!\[License](https://img.shields.io/badge/License-MIT-lightgrey)](LICENSE)
+### \[!\[License](https://img.shields.io/badge/License-MIT-lightgrey)](LICENSE)
 
-# 
+### 
 
-# ---
+### ---
 
-# 
+### 
 
-# \## Overview
+### \## Overview
 
-# 
+### 
 
-# \*\*Trust-and-Taste\*\* is a full-stack Web3 commerce demonstration integrating three interconnected systems on the XRP Ledger:
+### \*\*Trust-and-Taste\*\* is a full-stack Web3 commerce demonstration integrating three interconnected systems on the XRP Ledger:
 
-# 
+### 
 
-# | Module | Description |
+### | Module | Description |
 
-# |--------|-------------|
+### |--------|-------------|
 
-# | \[\*\*Bank Issuer MPT System\*\*](#1-bank-issuer-mpt-system) | Issue, authorize, freeze, and clawback MPTokens |
+### | \[\*\*Bank Issuer MPT System\*\*](#1-bank-issuer-mpt-system) | Issue, authorize, freeze, and clawback MPTokens |
 
-# | \[\*\*AI Order \& MPT Payment\*\*](#2-ai-order--mpt-payment) | AI-driven ordering with on-chain multi-currency payment and NFT receipts |
+### | \[\*\*AI Order \& MPT Payment\*\*](#2-ai-order--mpt-payment) | AI-driven ordering with on-chain multi-currency payment and NFT receipts |
 
-# | \[\*\*Smart Locker\*\*](#3-smart-locker-system) | NFT-burn-based physical locker redemption via Xaman |
+### | \[\*\*Smart Locker\*\*](#3-smart-locker-system) | NFT-burn-based physical locker redemption via Xaman |
 
-# 
+### 
 
-# ---
+### ---
 
-# 
+### 
 
-# \## Architecture
+### \## Architecture
 
-# 
+### 
 
-# ```
+### ```
 
-# ┌──────────────────────────────────────────────────────┐
+### ┌──────────────────────────────────────────────────────┐
 
-# │                    XRPL (Testnet / Mainnet)           │
+### │                    XRPL (Testnet / Mainnet)           │
 
-# │  MPTokenIssuance ──► MPT Transfer ──► NFT Mint/Burn  │
+### │  MPTokenIssuance ──► MPT Transfer ──► NFT Mint/Burn  │
 
-# └────────────┬─────────────────────────────────────────┘
+### └────────────┬─────────────────────────────────────────┘
 
-# &nbsp;            │ xrpl SDK
+### &nbsp;            │ xrpl SDK
 
-# &nbsp;  ┌──────────▼──────────────────────────────────┐
+### &nbsp;  ┌──────────▼──────────────────────────────────┐
 
-# &nbsp;  │           Node.js Backend Services          │
+### &nbsp;  │           Node.js Backend Services          │
 
-# &nbsp;  │  ┌────────────┐ ┌──────────┐ ┌───────────┐ │
+### &nbsp;  │  ┌────────────┐ ┌──────────┐ ┌───────────┐ │
 
-# &nbsp;  │  │ MPT Issuer │ │ AI Order │ │  Locker   │ │
+### &nbsp;  │  │ MPT Issuer │ │ AI Order │ │  Locker   │ │
 
-# &nbsp;  │  │  :3000     │ │  :3000   │ │  :3060    │ │
+### &nbsp;  │  │  :3000     │ │  :3000   │ │  :3060    │ │
 
-# &nbsp;  │  └────────────┘ └──────────┘ └───────────┘ │
+### &nbsp;  │  └────────────┘ └──────────┘ └───────────┘ │
 
-# &nbsp;  └──────────────────────────────────────────────┘
+### &nbsp;  └──────────────────────────────────────────────┘
 
-# &nbsp;            │
+### &nbsp;            │
 
-# &nbsp;  ┌──────────▼──────────────────────────────────┐
+### &nbsp;  ┌──────────▼──────────────────────────────────┐
 
-# &nbsp;  │     Xaman (XUMM) Wallet  ·  OpenAI API      │
+### &nbsp;  │     Xaman (XUMM) Wallet  ·  OpenAI API      │
 
-# &nbsp;  │     Pinata IPFS  ·  SQLite                   │
+### &nbsp;  │     Pinata IPFS  ·  SQLite                   │
 
-# &nbsp;  └──────────────────────────────────────────────┘
+### &nbsp;  └──────────────────────────────────────────────┘
 
-# ```
+### ```
 
-# 
+### 
 
-# ---
+### ---
 
-# 
+### 
 
-# \## Project Structure
+### \## Project Structure
 
-# 
+### 
 
-# ```
+### ```
 
-# trust-and-taste/
+### trust-and-taste/
 
-# │
+### │
 
-# ├── mpt-issuer/                  # Module 1: Bank Issuer MPT System
+### ├── mpt-issuer/                  # Module 1: Bank Issuer MPT System
 
-# │   ├── server.mjs               # Express server (ESM)
+### │   ├── server.mjs               # Express server (ESM)
 
-# │   ├── app.js                   # Frontend static JS
+### │   ├── app.js                   # Frontend static JS
 
-# │   ├── data.sqlite              # SQLite persistence (auto-created)
+### │   ├── data.sqlite              # SQLite persistence (auto-created)
 
-# │   ├── .env                     # Environment config
+### │   ├── .env                     # Environment config
 
-# │   └── package.json
+### │   └── package.json
 
-# │
+### │
 
-# ├── ai-order/                    # Module 2: AI Order \& MPT Payment
+### ├── ai-order/                    # Module 2: AI Order \& MPT Payment
 
-# │   ├── server.js                # Main backend (ESM)
+### │   ├── server.js                # Main backend (ESM)
 
-# │   ├── main.js                  # Frontend ordering logic
+### │   ├── main.js                  # Frontend ordering logic
 
-# │   ├── mintNFT.js               # Mint NFT on XRPL
+### │   ├── mintNFT.js               # Mint NFT on XRPL
 
-# │   ├── transferNFT.js           # NFT Sell Offer (0 XRP)
+### │   ├── transferNFT.js           # NFT Sell Offer (0 XRP)
 
-# │   ├── burnNFT.js               # NFT burn utility
+### │   ├── burnNFT.js               # NFT burn utility
 
-# │   ├── getMyNFTs.js             # Query NFTs by address
+### │   ├── getMyNFTs.js             # Query NFTs by address
 
-# │   ├── uploadIPFS.js            # Pinata IPFS uploader
+### │   ├── uploadIPFS.js            # Pinata IPFS uploader
 
-# │   ├── .env
+### │   ├── .env
 
-# │   └── package.json
+### │   └── package.json
 
-# │
+### │
 
-# └── smart-locker/                # Module 3: Smart Locker System
+### └── smart-locker/                # Module 3: Smart Locker System
 
-# &nbsp;   ├── server.js                # Main backend (CJS)
+### &nbsp;   ├── server.js                # Main backend (CJS)
 
-# &nbsp;   ├── app.js                   # Frontend locker UI logic
+### &nbsp;   ├── app.js                   # Frontend locker UI logic
 
-# &nbsp;   ├── burnNFT.js               # Execute NFTokenBurn
+### &nbsp;   ├── burnNFT.js               # Execute NFTokenBurn
 
-# &nbsp;   ├── mintNFT.js               # NFT minting
+### &nbsp;   ├── mintNFT.js               # NFT minting
 
-# &nbsp;   ├── transferNFT.js           # NFT transfer offer
+### &nbsp;   ├── transferNFT.js           # NFT transfer offer
 
-# &nbsp;   ├── uploadIPFS.js            # Pinata IPFS uploader
+### &nbsp;   ├── uploadIPFS.js            # Pinata IPFS uploader
 
-# &nbsp;   ├── .env
+### &nbsp;   ├── .env
 
-# &nbsp;   └── package.json
+### &nbsp;   └── package.json
 
-# ```
+### ```
 
-# 
+### 
 
-# ---
+### ---
 
-# 
+### 
 
-# \## 1. Bank Issuer MPT System
+### \## 1. Bank Issuer MPT System
 
-# 
+### 
 
-# \### Features
+### \### Features
 
-# 
+### 
 
-# \- \*\*MPToken Issuance\*\* — Create `MPTokenIssuance` on XRPL with configurable `AssetScale`, `TransferFee`, and `MaxAmount`
+### \- \*\*MPToken Issuance\*\* — Create `MPTokenIssuance` on XRPL with configurable `AssetScale`, `TransferFee`, and `MaxAmount`
 
-# \- \*\*Holder Authorization (Allow-list)\*\* — `tfMPTRequireAuth` mode; issuer explicitly approves each holder
+### \- \*\*Holder Authorization (Allow-list)\*\* — `tfMPTRequireAuth` mode; issuer explicitly approves each holder
 
-# \- \*\*MPT Transfer\*\* — Issuer-initiated direct MPT transfers to target accounts
+### \- \*\*MPT Transfer\*\* — Issuer-initiated direct MPT transfers to target accounts
 
-# \- \*\*Clawback\*\* — Recover MPT from any holder account
+### \- \*\*Clawback\*\* — Recover MPT from any holder account
 
-# \- \*\*Account Freeze / Unfreeze\*\* — Restrict or restore circulation via `MPTokenIssuanceSet`
+### \- \*\*Account Freeze / Unfreeze\*\* — Restrict or restore circulation via `MPTokenIssuanceSet`
 
-# \- \*\*Blacklist Policy\*\* — Automatic clawback triggered for blacklisted accounts
+### \- \*\*Blacklist Policy\*\* — Automatic clawback triggered for blacklisted accounts
 
-# \- \*\*Monitoring Dashboard\*\* — `/api/monitor` endpoint with recent operation logs
+### \- \*\*Monitoring Dashboard\*\* — `/api/monitor` endpoint with recent operation logs
 
-# \- \*\*SQLite Persistence\*\* — All records stored in `data.sqlite` (WAL mode)
+### \- \*\*SQLite Persistence\*\* — All records stored in `data.sqlite` (WAL mode)
 
-# 
+### 
 
-# \### Tech Stack
+### \### Tech Stack
 
-# 
+### 
 
-# | Component | Technology |
+### | Component | Technology |
 
-# |-----------|-----------|
+### |-----------|-----------|
 
-# | Runtime | Node.js (ESM) |
+### | Runtime | Node.js (ESM) |
 
-# | Framework | Express |
+### | Framework | Express |
 
-# | XRPL SDK | `xrpl` |
+### | XRPL SDK | `xrpl` |
 
-# | Wallet | `xumm-sdk` (Xaman) |
+### | Wallet | `xumm-sdk` (Xaman) |
 
-# | Database | `better-sqlite3` |
+### | Database | `better-sqlite3` |
 
-# | Frontend | Vanilla HTML + JS |
+### | Frontend | Vanilla HTML + JS |
 
-# 
+### 
 
-# \### Environment Variables
+### \### Environment Variables
 
-# 
+### 
 
-# ```env
+### ```env
 
-# PORT=3000
+### PORT=3000
 
-# BASE\_URL=http://localhost:3000
+### BASE\_URL=http://localhost:3000
 
-# 
+### 
 
-# XRPL\_WS=wss://s.altnet.rippletest.net:51233
+### XRPL\_WS=wss://s.altnet.rippletest.net:51233
 
-# 
+### 
 
-# KFD\_ISSUER\_SEED=sIssuerSeed...
+### KFD\_ISSUER\_SEED=sIssuerSeed...
 
-# KFD\_ISSUER\_ADDRESS=rIssuerAddress...
+### KFD\_ISSUER\_ADDRESS=rIssuerAddress...
 
-# 
+### 
 
-# XUMM\_API\_KEY=your-xumm-api-key
+### XUMM\_API\_KEY=your-xumm-api-key
 
-# XUMM\_API\_SECRET=your-xumm-api-secret
+### XUMM\_API\_SECRET=your-xumm-api-secret
 
-# 
+### 
 
-# \# Optional
+### \# Optional
 
-# RLUSD\_ISSUER=rRlusdAddress
+### RLUSD\_ISSUER=rRlusdAddress
 
-# ```
+### ```
 
-# 
+### 
 
-# > ⚠️ \*\*Never commit real credentials.\*\* Use `.env.example` for templates.
+### > ⚠️ \*\*Never commit real credentials.\*\* Use `.env.example` for templates.
 
-# 
+### 
 
-# \### Quick Start
+### \### Quick Start
 
-# 
+### 
 
-# ```bash
+### ```bash
 
-# cd mpt-issuer
+### cd mpt-issuer
 
-# npm install
+### npm install
 
-# npm start
+### npm start
 
-# \# → http://localhost:3000
+### \# → http://localhost:3000
 
-# ```
+### ```
 
-# 
+### 
 
-# \### API Reference
+### \### API Reference
 
-# 
+### 
 
-# | Method | Endpoint | Description |
+### | Method | Endpoint | Description |
 
-# |--------|----------|-------------|
+### |--------|----------|-------------|
 
-# | `POST` | `/api/issue` | Create a new MPTokenIssuance |
+### | `POST` | `/api/issue` | Create a new MPTokenIssuance |
 
-# | `POST` | `/api/authorize` | Authorize a holder account |
+### | `POST` | `/api/authorize` | Authorize a holder account |
 
-# | `POST` | `/api/transfer` | Transfer MPT to an account |
+### | `POST` | `/api/transfer` | Transfer MPT to an account |
 
-# | `POST` | `/api/clawback` | Clawback MPT from a holder |
+### | `POST` | `/api/clawback` | Clawback MPT from a holder |
 
-# | `POST` | `/api/freeze` | Freeze a holder's MPT |
+### | `POST` | `/api/freeze` | Freeze a holder's MPT |
 
-# | `POST` | `/api/unfreeze` | Unfreeze a holder's MPT |
+### | `POST` | `/api/unfreeze` | Unfreeze a holder's MPT |
 
-# | `GET`  | `/api/monitor` | View recent operation logs |
+### | `GET`  | `/api/monitor` | View recent operation logs |
 
-# 
+### 
 
-# ---
+### ---
 
-# 
+### 
 
-# \## 2. AI Order \& MPT Payment
+### \## 2. AI Order \& MPT Payment
 
-# 
+### 
 
-# \### Features
+### \### Features
 
-# 
+### 
 
-# \- \*\*AI Ordering Conversation\*\* — OpenAI-powered NLU for customer ordering; supports Chinese \& English
+### \- \*\*AI Ordering Conversation\*\* — OpenAI-powered NLU for customer ordering; supports Chinese \& English
 
-# \- \*\*Multi-Currency Payment\*\* — Xumm Payload integration supporting MPT, XRP, and RLUSD
+### \- \*\*Multi-Currency Payment\*\* — Xumm Payload integration supporting MPT, XRP, and RLUSD
 
-# \- \*\*NFT Receipt Minting\*\* — Post-payment: metadata → IPFS (Pinata) → NFT mint → transfer offer to buyer
+### \- \*\*NFT Receipt Minting\*\* — Post-payment: metadata → IPFS (Pinata) → NFT mint → transfer offer to buyer
 
-# \- \*\*Virtual Barista UI\*\* — Interactive idle/action video frontend
+### \- \*\*Virtual Barista UI\*\* — Interactive idle/action video frontend
 
-# \- \*\*RLUSD TrustLine Management\*\* — Xumm Payload helper for merchant trust line setup
+### \- \*\*RLUSD TrustLine Management\*\* — Xumm Payload helper for merchant trust line setup
 
-# 
+### 
 
-# \### Tech Stack
+### \### Tech Stack
 
-# 
+### 
 
-# | Component | Technology |
+### | Component | Technology |
 
-# |-----------|-----------|
+### |-----------|-----------|
 
-# | Runtime | Node.js (ESM) |
+### | Runtime | Node.js (ESM) |
 
-# | Framework | Express |
+### | Framework | Express |
 
-# | AI | OpenAI API |
+### | AI | OpenAI API |
 
-# | XRPL SDK | `xrpl` |
+### | XRPL SDK | `xrpl` |
 
-# | Wallet | `xumm-sdk` (Xaman) |
+### | Wallet | `xumm-sdk` (Xaman) |
 
-# | IPFS | Pinata |
+### | IPFS | Pinata |
 
-# | Frontend | Vanilla HTML + JS |
+### | Frontend | Vanilla HTML + JS |
 
-# 
+### 
 
-# \### Environment Variables
+### \### Environment Variables
 
-# 
+### 
 
-# ```env
+### ```env
 
-# BASE\_URL=https://your-domain-or-ngrok
+### BASE\_URL=https://your-domain-or-ngrok
 
-# 
+### 
 
-# OPENAI\_API\_KEY=sk-...
+### OPENAI\_API\_KEY=sk-...
 
-# 
+### 
 
-# STORE\_ADDRESS=rStoreWalletAddress...
+### STORE\_ADDRESS=rStoreWalletAddress...
 
-# ISSUER\_SECRET=sIssuerSeed...
+### ISSUER\_SECRET=sIssuerSeed...
 
-# ISSUER\_ADDRESS=rIssuerAddress...
+### ISSUER\_ADDRESS=rIssuerAddress...
 
-# 
+### 
 
-# XUMM\_API\_KEY=your-xumm-api-key
+### XUMM\_API\_KEY=your-xumm-api-key
 
-# XUMM\_API\_SECRET=your-xumm-api-secret
+### XUMM\_API\_SECRET=your-xumm-api-secret
 
-# 
+### 
 
-# PINATA\_JWT=your-pinata-jwt
+### PINATA\_JWT=your-pinata-jwt
 
-# 
+### 
 
-# KFD\_MPT\_ISSUANCE\_ID=00E253...
+### KFD\_MPT\_ISSUANCE\_ID=00E253...
 
-# 
+### 
 
-# RLUSD\_ISSUER=rRLUSDIssuerAddress...
+### RLUSD\_ISSUER=rRLUSDIssuerAddress...
 
-# RLUSD\_CURRENCY=RLUSD
+### RLUSD\_CURRENCY=RLUSD
 
-# ```
+### ```
 
-# 
+### 
 
-# \### Quick Start
+### \### Quick Start
 
-# 
+### 
 
-# ```bash
+### ```bash
 
-# cd ai-order
+### cd ai-order
 
-# npm install
+### npm install
 
-# npm run dev
+### npm run dev
 
-# \# → http://localhost:3000
+### \# → http://localhost:3000
 
-# ```
+### ```
 
-# 
+### 
 
-# \### Payment Flow
+### \### Payment Flow
 
-# 
+### 
 
-# ```
+### ```
 
-# User (AI Chat)
+### User (AI Chat)
 
-# &nbsp; │  Place order via natural language
+### &nbsp; │  Place order via natural language
 
-# &nbsp; ▼
+### &nbsp; ▼
 
-# Select Payment Method (MPT / XRP / RLUSD)
+### Select Payment Method (MPT / XRP / RLUSD)
 
-# &nbsp; │
+### &nbsp; │
 
-# &nbsp; ▼
+### &nbsp; ▼
 
-# Backend creates Xumm Payload
+### Backend creates Xumm Payload
 
-# &nbsp; │
+### &nbsp; │
 
-# &nbsp; ▼
+### &nbsp; ▼
 
-# User scans QR → Signs via XAMAN
+### User scans QR → Signs via XAMAN
 
-# &nbsp; │
+### &nbsp; │
 
-# &nbsp; ▼
+### &nbsp; ▼
 
-# Backend verifies on-chain transaction
+### Backend verifies on-chain transaction
 
-# &nbsp; │
+### &nbsp; │
 
-# &nbsp; ▼
+### &nbsp; ▼
 
-# Upload receipt image → Pinata IPFS
+### Upload receipt image → Pinata IPFS
 
-# &nbsp; │
+### &nbsp; │
 
-# &nbsp; ▼
+### &nbsp; ▼
 
-# Mint NFT (IPFS URI → XRPL)
+### Mint NFT (IPFS URI → XRPL)
 
-# &nbsp; │
+### &nbsp; │
 
-# &nbsp; ▼
+### &nbsp; ▼
 
-# Create NFT Sell Offer (0 XRP)
+### Create NFT Sell Offer (0 XRP)
 
-# &nbsp; │
+### &nbsp; │
 
-# &nbsp; ▼
+### &nbsp; ▼
 
-# Consumer receives NFT receipt in XAMAN ✅
+### Consumer receives NFT receipt in XAMAN ✅
 
-# ```
+### ```
 
-# 
+### 
 
-# \### API Reference
+### \### API Reference
 
-# 
+### 
 
-# | Method | Endpoint | Description |
+### | Method | Endpoint | Description |
 
-# |--------|----------|-------------|
+### |--------|----------|-------------|
 
-# | `POST` | `/api/chat` | Send message to AI ordering agent |
+### | `POST` | `/api/chat` | Send message to AI ordering agent |
 
-# | `POST` | `/api/checkout` | Create Xumm payment payload |
+### | `POST` | `/api/checkout` | Create Xumm payment payload |
 
-# | `GET`  | `/api/payload/:id` | Poll Xumm payload status |
+### | `GET`  | `/api/payload/:id` | Poll Xumm payload status |
 
-# | `POST` | `/api/verify` | Verify on-chain transaction |
+### | `POST` | `/api/verify` | Verify on-chain transaction |
 
-# | `POST` | `/api/mint-receipt` | Mint NFT receipt and create transfer offer |
+### | `POST` | `/api/mint-receipt` | Mint NFT receipt and create transfer offer |
 
-# | `POST` | `/api/trustline` | Generate RLUSD trustline payload for merchant |
+### | `POST` | `/api/trustline` | Generate RLUSD trustline payload for merchant |
 
-# 
+### 
 
-# ---
+### ---
 
-# 
+### 
 
-# \## 3. Smart Locker System
+### \## 3. Smart Locker System
 
-# 
+### 
 
-# \### Features
+### \### Features
 
-# 
+### 
 
-# \- \*\*Xaman Sign-In\*\* — QR-code login to retrieve the user's XRPL account
+### \- \*\*Xaman Sign-In\*\* — QR-code login to retrieve the user's XRPL account
 
-# \- \*\*NFT List Query\*\* — Filter NFTs by issuer address; resolve IPFS metadata and images
+### \- \*\*NFT List Query\*\* — Filter NFTs by issuer address; resolve IPFS metadata and images
 
-# \- \*\*NFT Burn Redemption\*\* — User signs `NFTokenBurn`; backend confirms on-chain and triggers unlock
+### \- \*\*NFT Burn Redemption\*\* — User signs `NFTokenBurn`; backend confirms on-chain and triggers unlock
 
-# \- \*\*Virtual Locker UI\*\* — LED status indicator and door-opening animation
+### \- \*\*Virtual Locker UI\*\* — LED status indicator and door-opening animation
 
-# \- \*\*IPFS Proxy\*\* — Server-side IPFS gateway proxy to avoid browser CORS issues
+### \- \*\*IPFS Proxy\*\* — Server-side IPFS gateway proxy to avoid browser CORS issues
 
-# 
+### 
 
-# \### Tech Stack
+### \### Tech Stack
 
-# 
+### 
 
-# | Component | Technology |
+### | Component | Technology |
 
-# |-----------|-----------|
+### |-----------|-----------|
 
-# | Runtime | Node.js (CJS) |
+### | Runtime | Node.js (CJS) |
 
-# | Framework | Express |
+### | Framework | Express |
 
-# | XRPL SDK | `xrpl` |
+### | XRPL SDK | `xrpl` |
 
-# | Wallet | `xumm-sdk` (Xaman) |
+### | Wallet | `xumm-sdk` (Xaman) |
 
-# | IPFS | Pinata |
+### | IPFS | Pinata |
 
-# | Frontend | Vanilla HTML + JS |
+### | Frontend | Vanilla HTML + JS |
 
-# 
+### 
 
-# \### Environment Variables
+### \### Environment Variables
 
-# 
+### 
 
-# ```env
+### ```env
 
-# PORT=3060
+### PORT=3060
 
-# BASE\_URL=https://your-ngrok-or-domain
+### BASE\_URL=https://your-ngrok-or-domain
 
-# 
+### 
 
-# XAMAN\_API\_KEY=your-xaman-api-key
+### XAMAN\_API\_KEY=your-xaman-api-key
 
-# XAMAN\_API\_SECRET=your-xaman-api-secret
+### XAMAN\_API\_SECRET=your-xaman-api-secret
 
-# 
+### 
 
-# XRPL\_WSS=wss://s.altnet.rippletest.net:51233
+### XRPL\_WSS=wss://s.altnet.rippletest.net:51233
 
-# ISSUER\_ADDRESS=rIssuerAddress...
+### ISSUER\_ADDRESS=rIssuerAddress...
 
-# ISSUER\_SECRET=sIssuerSeed...
+### ISSUER\_SECRET=sIssuerSeed...
 
-# 
+### 
 
-# PINATA\_JWT=your-pinata-jwt
+### PINATA\_JWT=your-pinata-jwt
 
-# 
+### 
 
-# \# Optional: custom IPFS gateways (comma-separated)
+### \# Optional: custom IPFS gateways (comma-separated)
 
-# IPFS\_GATEWAYS=https://nftstorage.link/ipfs/,https://ipfs.io/ipfs/
+### IPFS\_GATEWAYS=https://nftstorage.link/ipfs/,https://ipfs.io/ipfs/
 
-# ```
+### ```
 
-# 
+### 
 
-# \### Quick Start
+### \### Quick Start
 
-# 
+### 
 
-# ```bash
+### ```bash
 
-# cd smart-locker
+### cd smart-locker
 
-# npm install
+### npm install
 
-# npm start
+### npm start
 
-# \# → http://localhost:3060
+### \# → http://localhost:3060
 
-# ```
+### ```
 
-# 
+### 
 
-# \### Redemption Flow
+### \### Redemption Flow
 
-# 
+### 
 
-# ```
+### ```
 
-# User scans QR code (Xaman SignIn)
+### User scans QR code (Xaman SignIn)
 
-# &nbsp; │
+### &nbsp; │
 
-# &nbsp; ▼
+### &nbsp; ▼
 
-# Backend returns XRPL account
+### Backend returns XRPL account
 
-# &nbsp; │
+### &nbsp; │
 
-# &nbsp; ▼
+### &nbsp; ▼
 
-# Query account NFT list (filtered by ISSUER\_ADDRESS)
+### Query account NFT list (filtered by ISSUER\_ADDRESS)
 
-# &nbsp; │
+### &nbsp; │
 
-# &nbsp; ▼
+### &nbsp; ▼
 
-# Resolve IPFS metadata \& images
+### Resolve IPFS metadata \& images
 
-# &nbsp; │
+### &nbsp; │
 
-# &nbsp; ▼
+### &nbsp; ▼
 
-# User selects NFT → Signs NFTokenBurn via XAMAN
+### User selects NFT → Signs NFTokenBurn via XAMAN
 
-# &nbsp; │
+### &nbsp; │
 
-# &nbsp; ▼
+### &nbsp; ▼
 
-# Backend confirms on-chain burn
+### Backend confirms on-chain burn
 
-# &nbsp; │
+### &nbsp; │
 
-# &nbsp; ▼
+### &nbsp; ▼
 
-# Locker unlocks ✅  (LED green + door-opening animation)
+### Locker unlocks ✅  (LED green + door-opening animation)
 
-# ```
+### ```
 
-# 
+### 
 
-# \### API Reference
+### \### API Reference
 
-# 
+### 
 
-# | Method | Endpoint | Description |
+### | Method | Endpoint | Description |
 
-# |--------|----------|-------------|
+### |--------|----------|-------------|
 
-# | `POST` | `/api/signin` | Create Xaman sign-in payload |
+### | `POST` | `/api/signin` | Create Xaman sign-in payload |
 
-# | `GET`  | `/api/signin/:uuid` | Poll sign-in status |
+### | `GET`  | `/api/signin/:uuid` | Poll sign-in status |
 
-# | `GET`  | `/api/nfts/:address` | Get NFTs held by address (filtered by issuer) |
+### | `GET`  | `/api/nfts/:address` | Get NFTs held by address (filtered by issuer) |
 
-# | `POST` | `/api/burn` | Create NFTokenBurn payload |
+### | `POST` | `/api/burn` | Create NFTokenBurn payload |
 
-# | `GET`  | `/api/burn/:uuid` | Poll burn status and trigger unlock |
+### | `GET`  | `/api/burn/:uuid` | Poll burn status and trigger unlock |
 
-# | `GET`  | `/api/ipfs/:cid` | Proxy IPFS content (avoids CORS) |
+### | `GET`  | `/api/ipfs/:cid` | Proxy IPFS content (avoids CORS) |
 
-# 
+### 
 
-# ---
+### ---
 
-# 
+### 
 
-# \## Security Notes
+### \## Security Notes
 
-# 
+### 
 
-# \- \*\*Never commit `.env` files\*\* — add them to `.gitignore`
+### \- \*\*Never commit `.env` files\*\* — add them to `.gitignore`
 
-# \- Use environment-specific credentials for testnet vs. mainnet
+### \- Use environment-specific credentials for testnet vs. mainnet
 
-# \- Rotate Xumm API keys regularly
+### \- Rotate Xumm API keys regularly
 
-# \- All issuer seed phrases (`sXXX...`) must be stored securely; consider HSM or secrets management in production
+### \- All issuer seed phrases (`sXXX...`) must be stored securely; consider HSM or secrets management in production
 
-# 
+### 
 
-# ---
+### ---
 
-# 
+### 
 
-# \## Contributing
+### \## Contributing
 
-# 
+### 
 
-# 1\. Fork the repository
+### 1\. Fork the repository
 
-# 2\. Create a feature branch: `git checkout -b feature/my-feature`
+### 2\. Create a feature branch: `git checkout -b feature/my-feature`
 
-# 3\. Commit your changes: `git commit -m 'feat: add my feature'`
+### 3\. Commit your changes: `git commit -m 'feat: add my feature'`
 
-# 4\. Push to the branch: `git push origin feature/my-feature`
+### 4\. Push to the branch: `git push origin feature/my-feature`
 
-# 5\. Open a Pull Request
+### 5\. Open a Pull Request
 
-# 
+### 
 
-# ---
+### ---
 
-# 
+### 
 
-# \## License
+### \## License
 
-# 
+### 
 
-# MIT © Trust-and-Taste Contributors
+### 
 

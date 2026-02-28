@@ -1,0 +1,11 @@
+{
+  "name": "Classic Americano",
+  "description": "Purchased: Classic Americano",
+  "attributes": [
+    {
+      "trait_type": "Product",
+      "value": "Classic Americano"
+    }
+  ],
+  "image": "https://gateway.pinata.cloud/ipfs/bafkreifiv4ruy2puwcjqk7vnncitbhtxx2hsa4ygc4eqecuolbak6dw6g4"
+}

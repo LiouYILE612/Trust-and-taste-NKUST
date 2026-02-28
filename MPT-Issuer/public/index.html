@@ -1,0 +1,746 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>Coffee Chain MPT Admin</title>
+  <link rel="stylesheet" href="/styles.css"/>
+  <style>
+    .secondary { background:#E5E7EB; color:#111827; }
+    .danger { background:#DC2626; color:#FFF; }
+    .tag-claw { background:#FEE2E2; color:#B91C1C; }
+    .tag-lock { background:#FEF3C7; color:#92400E; }
+    .tag-unlock { background:#DCFCE7; color:#166534; }
+    
+    /* 自訂滾動條樣式，讓它更符合暗黑卡片風格 */
+    .scrollable-card::-webkit-scrollbar { width: 6px; }
+    .scrollable-card::-webkit-scrollbar-track { background: transparent; }
+    .scrollable-card::-webkit-scrollbar-thumb { background: #D5CFC4; border-radius: 4px; }
+  </style>
+</head>
+<body>
+
+  <aside class="sidebar">
+    <div class="sidebar-brand heavy-title">
+      COFFEE CHAIN<br>BANK MPT ADMIN
+    </div>
+    <div class="sidebar-menu" id="tabs">
+      <div class="menu-label">OVERVIEW</div>
+      <a data-target="console" class="tab-link active">Dashboard</a>
+      
+      <div class="menu-label">ISSUANCE FLOW</div>
+      <a data-target="create" class="tab-link">01 Create Token</a>
+      <a data-target="authorize" class="tab-link">02 Holder Opt-In</a>
+      <a data-target="send" class="tab-link">03 Distribute Asset</a>
+      
+      <div class="menu-label">SERVICES</div>
+      <a data-target="swap" class="tab-link" style="display:none;">Auto-Swap Kiosk</a>
+      <a data-target="policy" class="tab-link" style="display:none;">Policy & Blacklist</a>
+      <a data-target="control" class="tab-link">Account Controls</a>
+    </div>
+  </aside>
+
+  <main class="main-wrapper">
+
+    <div id="sec-console" class="section active">
+      <div class="steps-container">
+        <div class="step-item active"><div class="step-circle">✓</div><div class="step-label">Privileges</div></div>
+        <div class="step-item current"><div class="step-circle">02</div><div class="step-label">Create</div></div>
+        <div class="step-item"><div class="step-circle">03</div><div class="step-label">Authorize</div></div>
+        <div class="step-item"><div class="step-circle">04</div><div class="step-label">Distribute</div></div>
+      </div>
+
+      <div class="heavy-title" style="font-size:28px; margin-bottom:24px; border-left:4px solid var(--brand); padding-left:12px;">
+        System Dashboard
+      </div>
+
+      <div class="card" style="padding:20px 32px;">
+        <label style="margin-top:0;">Global Issuer Address (Auto-applied to all issuer actions)</label>
+        <input id="global-issuer" readonly value="Loading..." style="background:#F9FAFB; border:1px solid var(--line); font-family:monospace; font-size:16px; color:var(--text-main); margin-top:8px;"/>
+      </div>
+
+      <div class="stat-grid">
+        <div class="stat-card">
+          <div class="small" style="font-weight:800;">CURRENT SUPPLY (SCALED)</div>
+          <div id="display-supply" class="stat-value">0 KFD</div>
+        </div>
+        <div class="stat-card">
+          <div class="small" style="font-weight:800;">SYSTEM TIME</div>
+          <div id="display-time" class="stat-value" style="font-size:32px;">--:--:--</div>
+          <div id="display-date" class="small" style="margin-top:4px; font-weight:bold;">----/--/--</div>
+        </div>
+      </div>
+
+      <div style="display:grid; grid-template-columns: 1fr 1fr; gap:24px; align-items: stretch;">
+        
+        <div style="display: flex; flex-direction: column;">
+          <div class="terminal-title heavy-title" style="margin-bottom:12px;">▲ MPT TERMINAL ▲</div>
+          <div class="terminal-card" style="flex: 1;">
+            <div class="terminal-row">
+              <div class="terminal-label">[ STATUS ]</div>
+              <div class="terminal-data" id="term-status" style="color:var(--terminal-green);">ONLINE</div>
+            </div>
+            <div class="terminal-row">
+              <div class="terminal-label">[ ISSUANCE ID ]</div>
+              <div class="terminal-data" id="term-id" style="color:var(--terminal-gold);">WAITING_FOR_CREATION</div>
+            </div>
+            <div class="terminal-row">
+              <div class="terminal-label">[ OUTSTANDING (RAW) ]</div>
+              <div class="terminal-data" id="term-out" style="color:var(--terminal-gold);">0</div>
+            </div>
+            <div class="terminal-row">
+              <div class="terminal-label">[ MAXIMUM (SCALED) ]</div>
+              <div class="terminal-data" id="term-max" style="color:var(--terminal-gold);">0</div>
+            </div>
+            <div class="terminal-row">
+              <div class="terminal-label">[ ASSET SCALE ]</div>
+              <div class="terminal-data" id="term-scale" style="color:var(--terminal-gold);">0</div>
+            </div>
+            <div class="terminal-row">
+              <div class="terminal-label">[ LEDGER INDEX ]</div>
+              <div class="terminal-data" id="term-ledger" style="color:var(--terminal-green);">SYNCING...</div>
+            </div>
+          </div>
+        </div>
+
+        <div style="display: flex; flex-direction: column;">
+          <div class="terminal-title heavy-title" style="margin-bottom:12px;">📋 Recent Activity</div>
+          <div style="position: relative; flex: 1;">
+            <div class="card scrollable-card" style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; margin: 0; overflow-y: auto;">
+              <div id="recent-activity-list">
+                <div class="small" style="text-align:center; margin-top:40px;">No recent activity</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="sec-create" class="section">
+      <div class="card">
+        <h2>01. Create Token</h2>
+        <div style="color:var(--text-muted); font-size:13px; margin-bottom:24px;">
+          Initialize a new MPTokenIssuance on the XRPL.
+        </div>
+        
+        <div style="display:grid; grid-template-columns: 1fr 1fr; gap:20px;">
+          <div><label>Ticker Symbol</label><input id="c_ticker" value="KFD"/></div>
+          <div><label>Token Name</label><input id="c_name" value="KFD Token"/></div>
+          <div><label>Description</label><input id="c_desc" value="RWA Coffee Asset"/></div>
+          <div><label>Asset Scale (Decimals)</label><input id="c_assetScale" value="0" type="number"/></div>
+          <div><label>Maximum Amount</label><input id="c_maxAmount" value="1000000000"/></div>
+          <div><label>Transfer Fee (0-50000)</label><input id="c_transferFee" value="0" type="number"/></div>
+        </div>
+
+        <button id="c_btn">Execute Create Transaction</button>
+        <div style="margin-top:20px;"><span id="c_st" class="badge warn" style="opacity:0;">IDLE</span></div>
+        <pre id="c_log" style="display:none; margin-top:16px;"></pre>
+      </div>
+    </div>
+
+    <div id="sec-authorize" class="section">
+      <div class="card">
+        <h2>02. Holder Opt-In & Authorize</h2>
+        <div style="color:var(--text-muted); font-size:13px; margin-bottom:24px;">
+          Allow a specific XRPL account to hold the token. Automatically approves after user opt-in.
+        </div>
+
+        <label>Issuance ID (Auto-filled)</label>
+        <input id="a_issuanceId" readonly style="background:#F3F4F6;"/>
+        <label>Holder Address (Destination)</label>
+        <input id="a_holder" placeholder="Enter r-address..."/>
+
+        <button id="a_btn">Authorize Account</button>
+        <div style="margin-top:20px;"><span id="a_st" class="badge warn" style="opacity:0;">IDLE</span></div>
+
+        <div id="a_outBox" style="display:none; margin-top:24px; padding-top:24px; border-top:1px solid var(--line);">
+          <div style="display:flex; gap:24px; align-items:flex-start;">
+            <div id="a_qrCol" style="display:none; text-align:center; background:#FFF; padding:16px; border:1px solid var(--line); border-radius:12px;">
+              <img id="a_qr" style="width:200px; height:200px; border-radius:8px;"/>
+              <div style="margin-top:12px;">
+                <a id="a_deeplink" target="_blank" style="color:var(--brand); font-weight:bold; text-decoration:none;">Open in Xaman</a>
+              </div>
+              <div style="font-size:11px; color:var(--text-muted); margin-top:8px;">Scan to sign Opt-in</div>
+            </div>
+            <div style="flex:1;"><pre id="a_log" style="margin:0; height:100%;"></pre></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="sec-send" class="section">
+      <div class="card">
+        <h2>03. Distribute Asset</h2>
+        <div style="color:var(--text-muted); font-size:13px; margin-bottom:24px;">
+          Transfer MPT to an authorized holder.
+        </div>
+
+        <label>Issuance ID (Auto-filled)</label>
+        <input id="s_issuanceId" readonly style="background:#F3F4F6;"/>
+        <label>Destination Address</label>
+        <input id="s_dst" placeholder="Enter r-address..."/>
+        <label>Amount to Send (raw integer units)</label>
+        <input id="s_val" value="100"/>
+        <div class="small" style="margin-top:6px;">
+          Use raw MPT units. If Asset Scale = 0, 100 means exactly 100 tokens.
+        </div>
+
+        <button id="s_btn">Execute Transfer</button>
+        <div style="margin-top:20px;"><span id="s_st" class="badge warn" style="opacity:0;">IDLE</span></div>
+        <pre id="s_log" style="display:none; margin-top:16px;"></pre>
+      </div>
+    </div>
+
+    <div id="sec-swap" class="section">
+      <div class="card">
+        <h2>Auto-Swap Kiosk</h2>
+        <div style="color:var(--text-muted); font-size:13px; margin-bottom:24px;">
+          Users pay XRP/RLUSD to automatically receive MPT, then follow policy hooks (authorize / issue / clawback / lock / unlock).
+        </div>
+
+        <div style="display:flex; gap:24px; align-items:flex-start;">
+          <div style="flex:1;">
+            <label>Payment Currency</label>
+            <select id="sw_cur">
+              <option value="XRP">XRP</option>
+              <option value="RLUSD">RLUSD</option>
+            </select>
+
+            <label>Payment Amount</label>
+            <input id="sw_amt" value="1" type="number" step="any"/>
+
+            <button id="sw_btn">Generate Payment QR</button>
+            <div style="margin-top:20px;"><span id="sw_st" class="badge warn" style="opacity:0;">IDLE</span></div>
+          </div>
+          
+          <div id="sw_qrBox" style="display:none; text-align:center; background:#FFF; padding:16px; border:1px solid var(--line); border-radius:12px;">
+            <img id="sw_qr" style="width:200px; height:200px; border-radius:8px;"/>
+            <div style="margin-top:12px;">
+              <a id="sw_deeplink" target="_blank" style="color:var(--brand); font-weight:bold; text-decoration:none;">Open in Xaman</a>
+            </div>
+          </div>
+        </div>
+
+        <pre id="sw_log" style="display:none; margin-top:24px;"></pre>
+      </div>
+    </div>
+
+    <div id="sec-policy" class="section">
+      <div class="card">
+        <h2>Policy & Blacklist</h2>
+        <div style="color:var(--text-muted); font-size:13px; margin-bottom:24px;">
+          Configure auto actions after swap: auto lock / unlock / blacklist clawback.
+        </div>
+
+        <div style="display:grid; grid-template-columns: 1fr 1fr; gap:24px;">
+          <div>
+            <label style="display:flex; align-items:center; gap:10px;">
+              <input id="p_autoLock" type="checkbox"/>
+              Auto Lock After Swap
+            </label>
+
+            <label style="display:flex; align-items:center; gap:10px; margin-top:12px;">
+              <input id="p_autoUnlock" type="checkbox"/>
+              Auto Unlock After Swap
+            </label>
+
+            <label style="display:flex; align-items:center; gap:10px; margin-top:12px;">
+              <input id="p_autoClawback" type="checkbox"/>
+              Auto Clawback if Blacklisted
+            </label>
+
+            <button id="p_saveBtn" style="margin-top:20px;">Save Policy</button>
+            <div style="margin-top:20px;"><span id="p_st" class="badge warn" style="opacity:0;">IDLE</span></div>
+          </div>
+
+          <div>
+            <label>Blacklist Holder Address</label>
+            <input id="p_holder" placeholder="Enter r-address..."/>
+
+            <div style="display:flex; gap:12px; margin-top:16px; flex-wrap:wrap;">
+              <button id="p_addBtn">Add to Blacklist</button>
+              <button id="p_removeBtn" class="secondary">Remove from Blacklist</button>
+              <button id="p_checkBtn" class="secondary">Check Status</button>
+            </div>
+
+            <pre id="p_log" style="display:block; margin-top:16px;"></pre>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="sec-control" class="section">
+      <div class="card">
+        <h2>Account Controls</h2>
+        <div style="color:var(--text-muted); font-size:13px; margin-bottom:24px;">
+          Manual holder-level lock / unlock / clawback controls.
+        </div>
+
+        <label>Issuance ID (Auto-filled)</label>
+        <input id="ctl_issuanceId" readonly style="background:#F3F4F6;"/>
+
+        <label>Holder Address</label>
+        <input id="ctl_holder" placeholder="Enter r-address..."/>
+
+        <label>Clawback Amount (raw integer units)</label>
+        <input id="ctl_value" value="100"/>
+
+        <div style="display:flex; gap:12px; margin-top:20px; flex-wrap:wrap;">
+          <button id="ctl_lockBtn">Lock Holder</button>
+          <button id="ctl_unlockBtn" class="secondary">Unlock Holder</button>
+          <button id="ctl_clawBtn" class="danger">Clawback</button>
+          <button id="ctl_statusBtn" class="secondary">Check Holder Status</button>
+        </div>
+
+        <div style="margin-top:20px;"><span id="ctl_st" class="badge warn" style="opacity:0;">IDLE</span></div>
+        <pre id="ctl_log" style="display:block; margin-top:16px;"></pre>
+      </div>
+    </div>
+
+  </main>
+
+  <script type="module">
+    import { api, setStatus as rawSetStatus, $, pretty, pollPayload } from "/app.js"
+
+    function setStatus(el, kind, text) {
+      el.style.opacity = "1";
+      rawSetStatus(el, kind, text);
+    }
+
+    const tabs = document.querySelectorAll(".tab-link");
+    const sections = document.querySelectorAll(".section");
+
+    function switchTab(targetId) {
+      tabs.forEach(t => t.classList.remove("active"));
+      sections.forEach(s => s.classList.remove("active"));
+
+      document.querySelector(`[data-target="${targetId}"]`).classList.add("active");
+      document.getElementById(`sec-${targetId}`).classList.add("active");
+
+      if (["authorize", "send", "control"].includes(targetId)) syncIssuanceId();
+      if (targetId === "policy") loadPolicy();
+    }
+
+    tabs.forEach(tab => {
+      tab.addEventListener("click", () => switchTab(tab.dataset.target));
+    });
+
+    async function syncIssuanceId() {
+      let id = localStorage.getItem("KFD_ISSUANCE_ID");
+      if (!id) {
+        try {
+          const s = await api("/api/kfd/state");
+          if (s?.issuanceId) id = s.issuanceId;
+        } catch (e) {}
+      }
+
+      if (id) {
+        $("a_issuanceId").value = id;
+        $("s_issuanceId").value = id;
+        $("ctl_issuanceId").value = id;
+        localStorage.setItem("KFD_ISSUANCE_ID", id);
+      }
+    }
+
+    async function loadPolicy() {
+      try {
+        const p = await api("/api/kfd/policy");
+        $("p_autoLock").checked = !!p.autoLockAfterSwap;
+        $("p_autoUnlock").checked = !!p.autoUnlockAfterSwap;
+        $("p_autoClawback").checked = !!p.autoClawbackBlacklist;
+        $("p_log").textContent = pretty(p);
+      } catch (e) {
+        $("p_log").textContent = pretty(e.data || { error: e.message });
+      }
+    }
+
+    const short = (s, n = 8) => {
+      const v = String(s ?? "");
+      return v.length > n ? (v.slice(0, n) + "..." + v.slice(-4)) : v;
+    };
+
+    setInterval(() => {
+      const now = new Date();
+      $("display-time").textContent = now.toLocaleTimeString("en-US", { hour12: false });
+      $("display-date").textContent = now.toLocaleDateString();
+    }, 1000);
+
+    async function refreshDashboard() {
+      try {
+        const m = await api("/api/monitor");
+        let onchain = null;
+
+        try {
+          onchain = await api("/api/mpt/issuance");
+        } catch (e) {
+          onchain = e?.data || null;
+        }
+
+        const sym = m?.issuances?.[0]?.symbol || "KFD";
+        const scaleStr = onchain?.onchain?.outstanding_amount_scaled || "0";
+        $("display-supply").textContent = `${scaleStr} ${sym}`;
+
+        if (m?.issuances?.[0]?.issuer_account) {
+          $("global-issuer").value = m.issuances[0].issuer_account;
+        }
+
+        if (onchain?.ok) {
+          $("term-status").textContent = "ONLINE";
+          $("term-status").style.color = "var(--terminal-green)";
+          $("term-id").textContent = onchain.config?.issuanceId || "N/A";
+          $("term-out").textContent = onchain.onchain?.outstanding_amount_raw || "0";
+          $("term-max").textContent = onchain.onchain?.maximum_amount_scaled || "0";
+          $("term-scale").textContent = onchain.onchain?.asset_scale ?? "0";
+          $("term-ledger").textContent = onchain.validated_ledger_index || "SYNCED";
+        } else {
+          $("term-status").textContent = "OFFLINE / NOT CREATED";
+          $("term-status").style.color = "#EF4444";
+          $("term-id").textContent = "WAITING_FOR_CREATION";
+          $("term-out").textContent = "0";
+          $("term-max").textContent = "0";
+          $("term-scale").textContent = "0";
+          $("term-ledger").textContent = "N/A";
+        }
+
+        let acts = [];
+
+        if (m?.transfers) {
+          acts.push(...m.transfers.map(t => ({
+            type: "SENT",
+            time: t.created_at,
+            hash: t.txid,
+            val: `+ ${t.value}`
+          })));
+        }
+
+        if (m?.authorizations) {
+          acts.push(...m.authorizations.map(a => ({
+            type: "AUTH",
+            time: a.created_at,
+            hash: a.txid,
+            val: "-"
+          })));
+        }
+
+        if (m?.clawbacks) {
+          acts.push(...m.clawbacks.map(c => ({
+            type: "CLAW",
+            time: c.created_at,
+            hash: c.txid,
+            val: `- ${c.value || 0}`
+          })));
+        }
+
+        if (m?.locks) {
+          acts.push(...m.locks.map(l => ({
+            type: l.locked ? "LOCK" : "UNLOCK",
+            time: l.created_at,
+            hash: l.txid,
+            val: l.locked ? "[ON]" : "[OFF]"
+          })));
+        }
+
+        acts.sort((a, b) => b.time - a.time);
+        
+        // 將顯示數量拉高至 30，使清單足以產生滾動條
+        const topActs = acts.slice(0, 30);
+
+        if (topActs.length > 0) {
+          $("recent-activity-list").innerHTML = topActs.map(a => {
+            const dateObj = new Date(a.time);
+            const timeStr =
+              `${dateObj.getMonth() + 1}/${dateObj.getDate()}<br>` +
+              `${dateObj.getHours().toString().padStart(2, "0")}:${dateObj.getMinutes().toString().padStart(2, "0")}`;
+
+            const tagClass =
+              a.type === "SENT" ? "tag-sent" :
+              a.type === "AUTH" ? "tag-auth" :
+              a.type === "CLAW" ? "tag-claw" :
+              a.type === "LOCK" ? "tag-lock" :
+              "tag-unlock";
+
+            return `
+              <div class="activity-item">
+                <div class="activity-time">${timeStr}</div>
+                <div class="activity-tag ${tagClass}">[${a.type}]</div>
+                <div class="activity-hash">${short(a.hash)}</div>
+                <div class="activity-val">${a.val}</div>
+              </div>
+            `;
+          }).join("");
+        } else {
+          $("recent-activity-list").innerHTML =
+            `<div class="small" style="text-align:center; margin-top:40px;">No recent activity</div>`;
+        }
+      } catch (e) {}
+    }
+
+    refreshDashboard();
+    setInterval(refreshDashboard, 3000);
+    syncIssuanceId();
+
+    $("c_btn").onclick = async () => {
+      setStatus($("c_st"), "warn", "Processing...");
+      $("c_log").style.display = "block";
+
+      try {
+        const resp = await api("/api/kfd/create", "POST", {
+          ticker: $("c_ticker").value.trim(),
+          name: $("c_name").value.trim(),
+          description: $("c_desc").value.trim(),
+          assetScale: Number($("c_assetScale").value),
+          maxAmount: $("c_maxAmount").value.trim(),
+          transferFee: Number($("c_transferFee").value)
+        });
+
+        $("c_log").textContent = pretty(resp);
+
+        if (resp?.issuanceId) {
+          localStorage.setItem("KFD_ISSUANCE_ID", resp.issuanceId);
+          await syncIssuanceId();
+          setStatus($("c_st"), "ok", "SUCCESS ✅");
+        } else {
+          setStatus($("c_st"), "warn", "SUBMITTED");
+        }
+      } catch (e) {
+        setStatus($("c_st"), "err", "ERROR");
+        $("c_log").textContent = pretty(e.data || { error: e.message });
+      }
+    };
+
+    const showALog = (obj) => {
+      $("a_outBox").style.display = "block";
+      $("a_log").textContent = pretty(obj);
+    };
+
+    $("a_btn").onclick = async () => {
+      setStatus($("a_st"), "warn", "Processing...");
+      $("a_outBox").style.display = "none";
+      $("a_qrCol").style.display = "none";
+
+      try {
+        const resp = await api("/api/kfd/authorize", "POST", {
+          issuanceId: $("a_issuanceId").value.trim(),
+          holder: $("a_holder").value.trim()
+        });
+        showALog(resp);
+        setStatus($("a_st"), "ok", "AUTHORIZED ✅");
+      } catch (e) {
+        const data = e.data || { error: e.message };
+
+        if (data?.error === "HOLDER_NOT_OPTED_IN" && data?.authorizePayload?.uuid) {
+          showALog(data);
+          $("a_qrCol").style.display = "block";
+          $("a_qr").src = data.authorizePayload.qr;
+          $("a_deeplink").href = data.authorizePayload.deeplink;
+          setStatus($("a_st"), "warn", "Waiting for User Opt-In...");
+
+          const final = await pollPayload(data.authorizePayload.uuid, showALog);
+          if (!final?.signed) {
+            return setStatus($("a_st"), "err", "Not Signed or Timeout");
+          }
+
+          $("a_qrCol").style.display = "none";
+          setStatus($("a_st"), "warn", "Opt-In complete. Approving...");
+
+          try {
+            const r2 = await api("/api/kfd/authorize", "POST", {
+              issuanceId: $("a_issuanceId").value.trim(),
+              holder: $("a_holder").value.trim()
+            });
+            showALog(r2);
+            setStatus($("a_st"), "ok", "AUTHORIZED ✅");
+          } catch (e2) {
+            setStatus($("a_st"), "err", "Failed");
+            showALog(e2.data || { error: e2.message });
+          }
+        } else {
+          showALog(data);
+          setStatus($("a_st"), "err", "ERROR");
+        }
+      }
+    };
+
+    $("s_btn").onclick = async () => {
+      setStatus($("s_st"), "warn", "Processing...");
+      $("s_log").style.display = "block";
+
+      try {
+        const resp = await api("/api/kfd/send", "POST", {
+          issuanceId: $("s_issuanceId").value.trim(),
+          destination: $("s_dst").value.trim(),
+          value: $("s_val").value.trim()
+        });
+        $("s_log").textContent = pretty(resp);
+        setStatus($("s_st"), "ok", "SENT ✅");
+      } catch (e) {
+        setStatus($("s_st"), "err", "ERROR");
+        $("s_log").textContent = pretty(e.data || { error: e.message });
+      }
+    };
+
+    $("sw_btn").onclick = async () => {
+      setStatus($("sw_st"), "warn", "Generating...");
+      $("sw_log").style.display = "block";
+      $("sw_qrBox").style.display = "none";
+
+      try {
+        const p = await api("/api/kfd/swap-init", "POST", {
+          currency: $("sw_cur").value,
+          amount: Number($("sw_amt").value)
+        });
+
+        $("sw_qr").src = p.qr;
+        $("sw_deeplink").href = p.deeplink;
+        $("sw_qrBox").style.display = "block";
+        $("sw_log").textContent = pretty(p);
+        setStatus($("sw_st"), "warn", "Waiting Payment...");
+
+        const final = await pollPayload(p.uuid, (u) => {
+          $("sw_log").textContent = pretty(u);
+        });
+
+        if (final?.auto?.ok) {
+          const a = final.auto.actions || {};
+          let msg = "AUTO COMPLETED ✅";
+
+          if (a.clawback?.ok && !a.clawback?.skipped) {
+            msg = "AUTO CLAWBACK ✅";
+          } else if (a.lock?.ok && !a.lock?.skipped) {
+            msg = "AUTO LOCKED ✅";
+          } else if (a.unlock?.ok && !a.unlock?.skipped) {
+            msg = "AUTO UNLOCKED ✅";
+          } else if (a.issue?.ok) {
+            msg = "AUTO ISSUED ✅";
+          }
+
+          setStatus($("sw_st"), "ok", msg);
+        } else if (final?.validatedTx?.validated) {
+          setStatus($("sw_st"), "warn", "Paid (Policy / Auto flow incomplete)");
+        } else {
+          setStatus($("sw_st"), "err", "Timeout/Cancelled");
+        }
+      } catch (e) {
+        setStatus($("sw_st"), "err", "ERROR");
+        $("sw_log").textContent = pretty(e.data || { error: e.message });
+      }
+    };
+
+    $("p_saveBtn").onclick = async () => {
+      setStatus($("p_st"), "warn", "Saving...");
+      try {
+        const resp = await api("/api/kfd/policy", "POST", {
+          autoLockAfterSwap: $("p_autoLock").checked,
+          autoUnlockAfterSwap: $("p_autoUnlock").checked,
+          autoClawbackBlacklist: $("p_autoClawback").checked,
+        });
+        $("p_log").textContent = pretty(resp);
+        setStatus($("p_st"), "ok", "SAVED ✅");
+      } catch (e) {
+        $("p_log").textContent = pretty(e.data || { error: e.message });
+        setStatus($("p_st"), "err", "ERROR");
+      }
+    };
+
+    $("p_addBtn").onclick = async () => {
+      setStatus($("p_st"), "warn", "Adding...");
+      try {
+        const resp = await api("/api/kfd/blacklist/add", "POST", {
+          holder: $("p_holder").value.trim()
+        });
+        $("p_log").textContent = pretty(resp);
+        setStatus($("p_st"), "ok", "BLACKLISTED ✅");
+      } catch (e) {
+        $("p_log").textContent = pretty(e.data || { error: e.message });
+        setStatus($("p_st"), "err", "ERROR");
+      }
+    };
+
+    $("p_removeBtn").onclick = async () => {
+      setStatus($("p_st"), "warn", "Removing...");
+      try {
+        const resp = await api("/api/kfd/blacklist/remove", "POST", {
+          holder: $("p_holder").value.trim()
+        });
+        $("p_log").textContent = pretty(resp);
+        setStatus($("p_st"), "ok", "REMOVED ✅");
+      } catch (e) {
+        $("p_log").textContent = pretty(e.data || { error: e.message });
+        setStatus($("p_st"), "err", "ERROR");
+      }
+    };
+
+    $("p_checkBtn").onclick = async () => {
+      setStatus($("p_st"), "warn", "Checking...");
+      try {
+        const holder = $("p_holder").value.trim();
+        const resp = await api(`/api/kfd/blacklist/${encodeURIComponent(holder)}`);
+        $("p_log").textContent = pretty(resp);
+        setStatus($("p_st"), "ok", resp.blacklisted ? "BLACKLISTED" : "NOT BLACKLISTED");
+      } catch (e) {
+        $("p_log").textContent = pretty(e.data || { error: e.message });
+        setStatus($("p_st"), "err", "ERROR");
+      }
+    };
+
+    $("ctl_lockBtn").onclick = async () => {
+      setStatus($("ctl_st"), "warn", "Locking...");
+      try {
+        const resp = await api("/api/kfd/lock", "POST", {
+          issuanceId: $("ctl_issuanceId").value.trim(),
+          holder: $("ctl_holder").value.trim()
+        });
+        $("ctl_log").textContent = pretty(resp);
+        setStatus($("ctl_st"), "ok", "LOCKED ✅");
+      } catch (e) {
+        $("ctl_log").textContent = pretty(e.data || { error: e.message });
+        setStatus($("ctl_st"), "err", "ERROR");
+      }
+    };
+
+    $("ctl_unlockBtn").onclick = async () => {
+      setStatus($("ctl_st"), "warn", "Unlocking...");
+      try {
+        const resp = await api("/api/kfd/unlock", "POST", {
+          issuanceId: $("ctl_issuanceId").value.trim(),
+          holder: $("ctl_holder").value.trim()
+        });
+        $("ctl_log").textContent = pretty(resp);
+        setStatus($("ctl_st"), "ok", "UNLOCKED ✅");
+      } catch (e) {
+        $("ctl_log").textContent = pretty(e.data || { error: e.message });
+        setStatus($("ctl_st"), "err", "ERROR");
+      }
+    };
+
+    $("ctl_clawBtn").onclick = async () => {
+      setStatus($("ctl_st"), "warn", "Clawback...");
+      try {
+        const resp = await api("/api/kfd/clawback", "POST", {
+          issuanceId: $("ctl_issuanceId").value.trim(),
+          holder: $("ctl_holder").value.trim(),
+          value: $("ctl_value").value.trim()
+        });
+        $("ctl_log").textContent = pretty(resp);
+        setStatus($("ctl_st"), "ok", "CLAWBACK ✅");
+      } catch (e) {
+        $("ctl_log").textContent = pretty(e.data || { error: e.message });
+        setStatus($("ctl_st"), "err", "ERROR");
+      }
+    };
+
+    $("ctl_statusBtn").onclick = async () => {
+      setStatus($("ctl_st"), "warn", "Checking...");
+      try {
+        const holder = $("ctl_holder").value.trim();
+        const resp = await api(`/api/kfd/account-status/${encodeURIComponent(holder)}`);
+        $("ctl_log").textContent = pretty(resp);
+        setStatus($("ctl_st"), "ok", "STATUS LOADED");
+      } catch (e) {
+        $("ctl_log").textContent = pretty(e.data || { error: e.message });
+        setStatus($("ctl_st"), "err", "ERROR");
+      }
+    };
+  </script>
+</body>
+</html>

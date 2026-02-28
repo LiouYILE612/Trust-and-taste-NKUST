@@ -1,0 +1,11 @@
+{
+  "name": "Latte",
+  "description": "Purchased: Latte",
+  "attributes": [
+    {
+      "trait_type": "Product",
+      "value": "Latte"
+    }
+  ],
+  "image": "https://gateway.pinata.cloud/ipfs/bafkreieejafkt3s5u7iwkkwu5yt6yljter3mg55i4txhtjgkn45tewz754"
+}

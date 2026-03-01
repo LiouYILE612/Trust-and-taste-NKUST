@@ -255,10 +255,10 @@ The SQLite database (`data.sqlite`) contains the following tables:
 ---
 
 ## Team 
-- 1.Yu-Hung Cheng
-- 2.Kelly Huang
-- 3.Ho-Feng Chiu
-- 4.YI-LE,LIOU
-- 5.Dr. Wei-Chih,HSU
-- 6.Dr. Echo Huang
+- **Yu-Hung Cheng**
+- **Kelly Huang**
+- **Ho-Feng Chiu**
+- **YI-LE,LIOU**
+- **Dr. Wei-Chih,HSU**
+- **Dr. Echo Huang**
 

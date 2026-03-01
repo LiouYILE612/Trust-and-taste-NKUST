@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trust & Taste | Scaling Morning Velocity</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: { sans: ['Quicksand', 'sans-serif'] },
+                    colors: {
+                        oatLatte: '#EAE0D5',
+                        warmBrown: '#4A3326',
+                        sunrise: '#E67E22',
+                        amberGlow: '#F39C12',
+                        sageGreen: '#5A7D6C',
+                    }
+                }
+            }
+        }
+    </script>
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <style>
+        body { background-color: #EAE0D5; color: #4A3326; overflow-x: hidden; }
+        html { scroll-behavior: smooth; }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.75); backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.9); box-shadow: 0 15px 35px rgba(74, 51, 38, 0.1);
+        }
+        .glass-nav {
+            background: rgba(234, 224, 213, 0.85); backdrop-filter: blur(15px); border-bottom: 1px solid rgba(255,255,255,0.5);
+        }
+        .step-line {
+            position: absolute; top: 50%; left: 50%; width: 100%; height: 5px;
+            background: linear-gradient(90deg, #E67E22 0%, #5A7D6C 100%); z-index: -1; transform: translateY(-50%);
+        }
+    </style>
+</head>
+<body id="top" class="antialiased selection:bg-sunrise selection:text-white flex flex-col items-center">
+
+    <nav class="fixed top-0 w-full z-50 glass-nav transition-all duration-300">
+        <div class="max-w-6xl mx-auto px-6 py-4 flex justify-between items-center">
+            <a href="#top" class="text-2xl font-bold text-warmBrown tracking-wide hover:text-sunrise transition cursor-pointer">Trust&Taste.</a>
+            <div class="hidden md:flex items-center gap-6 font-bold text-warmBrown/80">
+                <a href="#problem" class="hover:text-sunrise transition">Problem</a>
+                <a href="#solution" class="hover:text-amberGlow transition">Solution</a>
+                <a href="#how-it-works" class="hover:text-sageGreen transition">How It Works</a>
+                <a href="#mpt-benefits" class="hover:text-sunrise transition">MPT Benefits</a>
+                <a href="#demo-steps" class="hover:text-sunrise transition font-extrabold">Demo</a>
+                <a href="#faq" class="hover:text-amberGlow transition">FAQ</a>
+                <a href="#team" class="hover:text-warmBrown transition">Team</a>
+            </div>
+        </div>
+    </nav>
+
+    <header class="min-h-screen w-full flex flex-col justify-center items-center text-center px-6 relative pt-20">
+        <div class="absolute top-0 left-0 w-full h-full overflow-hidden -z-10 opacity-30">
+            <div class="absolute -top-[10%] -right-[10%] w-96 h-96 bg-amberGlow rounded-full mix-blend-multiply filter blur-3xl"></div>
+            <div class="absolute top-[20%] -left-[10%] w-72 h-72 bg-sunrise rounded-full mix-blend-multiply filter blur-3xl"></div>
+        </div>
+
+        <div data-aos="zoom-in" data-aos-duration="1000" class="mb-10">
+            <img src="Trust & Taste Logo.png" alt="Trust & Taste Logo" class="w-48 md:w-56 rounded-full shadow-2xl border-4 border-white mx-auto">
+        </div>
+        
+        <h1 data-aos="fade-up" data-aos-delay="200" class="text-5xl md:text-7xl font-bold mb-6 max-w-5xl leading-tight text-warmBrown">
+            Trust & Taste: <br> The <span class="text-sunrise">Laborless</span> Breakfast <span class="text-sageGreen">Revolution.</span>
+        </h1>
+        
+        <p data-aos="fade-up" data-aos-delay="400" class="text-xl md:text-2xl font-bold tracking-wide text-warmBrown/80 mb-12 max-w-3xl leading-relaxed">
+            Solving Taiwan's breakfast shop labor shortage with AI Assistants and Smart Lockers on XRPL.
+        </p>
+    </header>
+
+    <main class="w-full max-w-6xl mx-auto px-6 py-20 space-y-32">
+        
+        <section id="problem" class="py-10 scroll-mt-28 flex flex-col items-center gap-6">
+            <h2 data-aos="fade-up" class="text-4xl md:text-5xl font-bold text-sunrise flex items-center justify-center gap-4">
+                <svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>
+                The Problem
+            </h2>
+            <div data-aos="zoom-in" data-aos-delay="100" class="w-full h-[280px] rounded-[2rem] shadow-xl border-4 border-white overflow-hidden">
+                <img src="queue.jpg" alt="Crowded coffee shop queue" class="w-full h-full object-cover object-center">
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 w-full">
+                <div data-aos="fade-up" data-aos-delay="200" class="glass-card p-6 rounded-[2rem] text-center hover:-translate-y-2 transition duration-300">
+                    <div class="bg-sunrise/20 p-4 rounded-2xl mb-4 inline-block"><span class="text-3xl">👷</span></div>
+                    <h3 class="text-xl md:text-2xl font-bold text-warmBrown mb-2">Labor Shortage</h3>
+                    <p class="text-lg text-warmBrown/80 font-medium">Extreme difficulty in hiring staff for the high-pressure morning rush.</p>
+                </div>
+                <div data-aos="fade-up" data-aos-delay="300" class="glass-card p-6 rounded-[2rem] text-center hover:-translate-y-2 transition duration-300">
+                    <div class="bg-amberGlow/20 p-4 rounded-2xl mb-4 inline-block"><span class="text-3xl">⏳</span></div>
+                    <h3 class="text-xl md:text-2xl font-bold text-warmBrown mb-2">Inefficiency</h3>
+                    <p class="text-lg text-warmBrown/80 font-medium">Staff are overwhelmed by manual ordering, cooking, and checkout.</p>
+                </div>
+                <div data-aos="fade-up" data-aos-delay="400" class="glass-card p-6 rounded-[2rem] text-center hover:-translate-y-2 transition duration-300">
+                    <div class="bg-sageGreen/20 p-4 rounded-2xl mb-4 inline-block"><span class="text-3xl">🛡️</span></div>
+                    <h3 class="text-xl md:text-2xl font-bold text-warmBrown mb-2">Security Risk</h3>
+                    <p class="text-lg text-warmBrown/80 font-medium">Standard Web3 lacks asset recovery; once a key is stolen, value is gone.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="solution" class="py-10 scroll-mt-28">
+            <h2 data-aos="fade-up" class="text-4xl md:text-5xl font-bold text-center mb-16 text-sageGreen">The Solution</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
+                <div data-aos="fade-up" data-aos-delay="100" class="glass-card p-10 rounded-[3rem] border-t-8 border-t-sunrise hover:-translate-y-2 transition duration-300">
+                    <div class="flex justify-between items-center mb-6">
+                        <h3 class="text-4xl font-bold text-warmBrown">To-Go</h3>
+                        <span class="px-4 py-1 bg-sunrise/20 text-sunrise rounded-full font-bold">Grab & Go</span>
+                    </div>
+                    <img src="togo-locker.png" class="w-full h-64 object-cover rounded-[2rem] mb-6 shadow-inner border-2 border-white">
+                    <p class="text-xl font-medium text-warmBrown/90 leading-relaxed">Pre-made items stored in AI <strong class="text-sunrise">Smart Lockers</strong> with seamless <strong class="text-sunrise">MPT</strong> checkout.</p>
+                </div>
+                <div data-aos="fade-up" data-aos-delay="200" class="glass-card p-10 rounded-[3rem] border-t-8 border-t-sageGreen hover:-translate-y-2 transition duration-300">
+                    <div class="flex justify-between items-center mb-6">
+                        <h3 class="text-4xl font-bold text-warmBrown">Dine-In</h3>
+                        <span class="px-4 py-1 bg-sageGreen/20 text-sageGreen rounded-full font-bold">Made-to-Order</span>
+                    </div>
+                    <img src="dinein-ai.png" class="w-full h-64 object-cover rounded-[2rem] mb-6 shadow-inner border-2 border-white">
+                    <p class="text-xl font-medium text-warmBrown/90 leading-relaxed"><strong class="text-sageGreen">AI Virtual Barista</strong> interaction linked to secure <strong class="text-sageGreen">Non-transferable NFT</strong> vouchers.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="how-it-works" class="py-10 scroll-mt-28">
+            <h2 data-aos="fade-up" class="text-5xl font-bold text-center mb-20 text-warmBrown">How It Works</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 relative">
+                <div class="hidden md:block step-line"></div>
+                <div data-aos="fade-up" data-aos-delay="100" class="glass-card p-10 rounded-[2rem] text-center z-10 hover:-translate-y-3 transition duration-300">
+                    <div class="w-20 h-20 bg-white rounded-full flex items-center justify-center mx-auto mb-6 border-4 border-sunrise text-3xl font-bold text-sunrise shadow-lg">1</div>
+                    <h3 class="text-3xl font-bold mb-2 text-warmBrown">Order</h3>
+                    <p class="text-lg font-bold text-sunrise mb-4 tracking-wide uppercase">AI Demand Prediction</p>
+                    <p class="text-lg font-medium text-warmBrown/80">AI predicts hyper-local commuting demand to secure inventory before you arrive.</p>
+                </div>
+                <div data-aos="fade-up" data-aos-delay="300" class="glass-card p-10 rounded-[2rem] text-center z-10 hover:-translate-y-3 transition duration-300">
+                    <div class="w-20 h-20 bg-white rounded-full flex items-center justify-center mx-auto mb-6 border-4 border-sageGreen text-3xl font-bold text-sageGreen shadow-lg">2</div>
+                    <h3 class="text-3xl font-bold mb-2 text-warmBrown">Pay</h3>
+                    <p class="text-lg font-bold text-sageGreen mb-4 tracking-wide uppercase">XRPL MPT</p>
+                    <p class="text-lg font-medium text-warmBrown/80">Issue points or credits as XRPL MPTs with clear usage rules and instant delivery.</p>
+                </div>
+                <div data-aos="fade-up" data-aos-delay="500" class="glass-card p-10 rounded-[2rem] text-center z-10 hover:-translate-y-3 transition duration-300">
+                    <div class="w-20 h-20 bg-white rounded-full flex items-center justify-center mx-auto mb-6 border-4 border-amberGlow text-3xl font-bold text-amberGlow shadow-lg">3</div>
+                    <h3 class="text-3xl font-bold mb-2 text-warmBrown">Grab</h3>
+                    <p class="text-lg font-bold text-amberGlow mb-4 tracking-wide uppercase">Zero-Friction</p>
+                    <p class="text-lg font-medium text-warmBrown/80">Scan to unlock the thermal locker. Zero queues, zero latency, just grab and go.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="mpt-benefits" class="py-10 scroll-mt-28">
+            <h2 data-aos="fade-up" class="text-5xl font-bold text-center mb-6 text-warmBrown">
+                MPT: Value for Every Stakeholder
+            </h2>
+            <p data-aos="fade-up" data-aos-delay="100" class="text-xl md:text-2xl text-center text-warmBrown/80 font-medium max-w-4xl mx-auto mb-14 leading-relaxed">
+                XRPL Multi-Purpose Tokens (MPTs) turn payments, rewards, and credits into programmable digital value—creating measurable benefits for merchants, consumers, and regulated financial partners.
+            </p>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div data-aos="fade-up" data-aos-delay="100" class="glass-card p-8 rounded-[2rem] hover:-translate-y-2 transition duration-300">
+                    <div class="w-16 h-16 bg-white text-sunrise rounded-2xl flex items-center justify-center mb-5 shadow-md border-2 border-sunrise">
+                        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 7h18M5 7l1 12h12l1-12M9 11v4m6-4v4M8 7V5a4 4 0 018 0v2"></path></svg>
+                    </div>
+                    <h3 class="text-2xl font-bold text-warmBrown mb-3">Merchant Benefits</h3>
+                    <p class="text-sm font-bold text-sunrise uppercase tracking-wide mb-4">Growth + Control</p>
+                    <ul class="space-y-3 text-lg text-warmBrown/90 leading-relaxed font-medium">
+                        <li>• Issue points, vouchers, and credits with clear usage rules</li>
+                        <li>• Reduce coupon abuse and improve campaign control</li>
+                        <li>• Streamline reconciliation and loyalty operations</li>
+                    </ul>
+                </div>
+
+                <div data-aos="fade-up" data-aos-delay="300" class="glass-card p-8 rounded-[2rem] hover:-translate-y-2 transition duration-300">
+                    <div class="w-16 h-16 bg-white text-amberGlow rounded-2xl flex items-center justify-center mb-5 shadow-md border-2 border-amberGlow">
+                        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 9V7a5 5 0 00-10 0v2m-2 0h14l-1 10H6L5 9z"></path></svg>
+                    </div>
+                    <h3 class="text-2xl font-bold text-warmBrown mb-3">Consumer Benefits</h3>
+                    <p class="text-sm font-bold text-amberGlow uppercase tracking-wide mb-4">Speed + Transparency</p>
+                    <ul class="space-y-3 text-lg text-warmBrown/90 leading-relaxed font-medium">
+                        <li>• Receive rewards instantly after payment</li>
+                        <li>• See clear usage and redemption rules upfront</li>
+                        <li>• Enjoy smoother checkout and pickup experiences</li>
+                    </ul>
+                </div>
+
+                <div data-aos="fade-up" data-aos-delay="500" class="glass-card p-8 rounded-[2rem] hover:-translate-y-2 transition duration-300">
+                    <div class="w-16 h-16 bg-white text-sageGreen rounded-2xl flex items-center justify-center mb-5 shadow-md border-2 border-sageGreen">
+                        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3l8 4v5c0 5-3.5 8-8 9-4.5-1-8-4-8-9V7l8-4z"></path></svg>
+                    </div>
+                    <h3 class="text-2xl font-bold text-warmBrown mb-3">Banking & Compliance</h3>
+                    <p class="text-sm font-bold text-sageGreen uppercase tracking-wide mb-4">KYC + Auditable Flows</p>
+                    <ul class="space-y-3 text-lg text-warmBrown/90 leading-relaxed font-medium">
+                        <li>• Supports KYC/AML onboarding by regulated partners</li>
+                        <li>• Policy-based authorization for issuance and redemption</li>
+                        <li>• Auditable transaction trails for monitoring</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <section id="demo-steps" class="py-10 scroll-mt-28 w-full max-w-5xl mx-auto">
+            <h2 data-aos="fade-up" class="text-5xl font-bold text-center mb-16 text-warmBrown">Demo</h2>
+
+            <div data-aos="fade-up" data-aos-delay="100" class="glass-card p-8 md:p-12 rounded-[3rem] mb-12 shadow-2xl border-2 border-white/50">
+                <div class="flex flex-col md:flex-row justify-between items-center mb-10 gap-4">
+                    <div class="text-left w-full">
+                        <h3 class="text-3xl font-bold text-warmBrown mb-2">Step 0: The Trust Foundation</h3>
+                        <p class="text-warmBrown/70 font-medium">Establishing Regulatory & Financial Backing</p>
+                    </div>
+                    <div class="flex bg-warmBrown/5 p-2 rounded-2xl gap-2 shrink-0">
+                        <button onclick="switchInit(1)" id="btn-init-1" class="px-6 py-2 rounded-xl font-bold transition-all bg-sunrise text-white shadow-md">01. Assets</button>
+                        <button onclick="switchInit(2)" id="btn-init-2" class="px-6 py-2 rounded-xl font-bold transition-all text-warmBrown/50 hover:bg-white/50">02. Audit</button>
+                        <button onclick="switchInit(3)" id="btn-init-3" class="px-6 py-2 rounded-xl font-bold transition-all text-warmBrown/50 hover:bg-white/50">03. Auth</button>
+                    </div>
+                </div>
+
+                <div class="relative w-full h-[300px] md:h-[450px] overflow-hidden rounded-[2rem] shadow-inner bg-oatLatte/50">
+                    <div id="init-1" class="init-view absolute inset-0 transition-all duration-700 opacity-100 scale-100">
+                        <img src="init-asset.png" class="w-full h-full object-cover">
+                        <div class="absolute inset-0 bg-gradient-to-t from-warmBrown/80 to-transparent flex items-end p-8">
+                            <p class="text-white text-xl md:text-2xl font-bold">Merchant provides physical assets as collateral to the bank.</p>
+                        </div>
+                    </div>
+                    <div id="init-2" class="init-view absolute inset-0 transition-all duration-700 opacity-0 scale-95 pointer-events-none">
+                        <img src="init-audit.png" class="w-full h-full object-cover">
+                        <div class="absolute inset-0 bg-gradient-to-t from-warmBrown/80 to-transparent flex items-end p-8">
+                            <p class="text-white text-xl md:text-2xl font-bold">Bank performs risk audit and establishes the Digital Trust contract.</p>
+                        </div>
+                    </div>
+                    <div id="init-3" class="init-view absolute inset-0 transition-all duration-700 opacity-0 scale-95 pointer-events-none">
+                        <img src="init-auth.png" class="w-full h-full object-cover">
+                        <div class="absolute inset-0 bg-gradient-to-t from-warmBrown/80 to-transparent flex items-end p-8">
+                            <p class="text-white text-xl md:text-2xl font-bold">Bank authorizes MPT issuance gateway on the XRP Ledger.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div data-aos="fade-up" data-aos-delay="200" class="glass-card p-8 md:p-12 rounded-[3rem] mb-12 shadow-2xl border-2 border-white/50">
+                <div class="flex flex-col md:flex-row justify-between items-center mb-8 gap-4">
+                    <div class="text-left w-full">
+                        <h3 class="text-3xl font-bold text-warmBrown mb-2">Step 1: MPT Issuance</h3>
+                        <p class="text-warmBrown/70 font-medium">Directly issuing trackable MPT tokens via Bank Gateway.</p>
+                    </div>
+                </div>
+                <div class="relative w-full h-[300px] md:h-[450px] overflow-hidden rounded-[2rem] shadow-inner bg-black">
+                    <video id="video-1" class="w-full h-full object-cover" poster="video-1-poster.jpg">
+                        <source src="MPT-POC.mp4" type="video/mp4">
+                    </video>
+                    <button id="play-btn-1" onclick="startVideo('video-1', 'play-btn-1')" class="absolute inset-0 flex items-center justify-center bg-black/30 hover:bg-black/10 transition duration-300 w-full h-full">
+                        <div class="w-20 h-20 bg-white/90 rounded-full flex items-center justify-center text-sunrise shadow-2xl transform hover:scale-110 transition">
+                            <svg class="w-10 h-10 ml-2" fill="currentColor" viewBox="0 0 20 20"><path d="M4.5 3.5L16.5 10L4.5 16.5V3.5Z"></path></svg>
+                        </div>
+                    </button>
+                </div>
+            </div>
+
+            <div data-aos="fade-up" data-aos-delay="300" class="glass-card p-8 md:p-12 rounded-[3rem] mb-12 shadow-2xl border-2 border-white/50">
+                <div class="flex flex-col md:flex-row justify-between items-center mb-8 gap-4">
+                    <div class="text-left w-full">
+                        <h3 class="text-3xl font-bold text-warmBrown mb-2">Step 2: AI Ordering & receive NFT</h3>
+                        <p class="text-warmBrown/70 font-medium">Voice AI processing & instant MPT settlement.</p>
+                    </div>
+                </div>
+                <div class="relative w-full h-[300px] md:h-[450px] overflow-hidden rounded-[2rem] shadow-inner bg-black">
+                    <video id="video-2" class="w-full h-full object-cover" poster="video-2-poster.jpg">
+                        <source src="AI點餐(剪完).mp4" type="video/mp4">
+                    </video>
+                    <button id="play-btn-2" onclick="startVideo('video-2', 'play-btn-2')" class="absolute inset-0 flex items-center justify-center bg-black/30 hover:bg-black/10 transition duration-300 w-full h-full">
+                        <div class="w-20 h-20 bg-white/90 rounded-full flex items-center justify-center text-sageGreen shadow-2xl transform hover:scale-110 transition">
+                            <svg class="w-10 h-10 ml-2" fill="currentColor" viewBox="0 0 20 20"><path d="M4.5 3.5L16.5 10L4.5 16.5V3.5Z"></path></svg>
+                        </div>
+                    </button>
+                </div>
+            </div>
+
+            <div data-aos="fade-up" data-aos-delay="400" class="glass-card p-8 md:p-12 rounded-[3rem] shadow-2xl border-2 border-white/50">
+                <div class="flex flex-col md:flex-row justify-between items-center mb-8 gap-4">
+                    <div class="text-left w-full">
+                        <h3 class="text-3xl font-bold text-warmBrown mb-2">Step 3: NFT Redemption at IoT smart locker</h3>
+                        <p class="text-warmBrown/70 font-medium">Opening virtual locker & burning NFT on-chain.</p>
+                    </div>
+                </div>
+                <div class="relative w-full h-[300px] md:h-[450px] overflow-hidden rounded-[2rem] shadow-inner bg-black">
+                    <video id="video-3" class="w-full h-full object-cover" poster="video-3-poster.jpg">
+                        <source src="自取櫃(剪完).mp4" type="video/mp4">
+                    </video>
+                    <button id="play-btn-3" onclick="startVideo('video-3', 'play-btn-3')" class="absolute inset-0 flex items-center justify-center bg-black/30 hover:bg-black/10 transition duration-300 w-full h-full">
+                        <div class="w-20 h-20 bg-white/90 rounded-full flex items-center justify-center text-amberGlow shadow-2xl transform hover:scale-110 transition">
+                            <svg class="w-10 h-10 ml-2" fill="currentColor" viewBox="0 0 20 20"><path d="M4.5 3.5L16.5 10L4.5 16.5V3.5Z"></path></svg>
+                        </div>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <section id="faq" class="py-10 scroll-mt-28">
+            <h2 data-aos="fade-up" class="text-5xl font-bold text-center mb-6 text-warmBrown">Anticipating the Friction</h2>
+            <div data-aos="fade-up" data-aos-delay="100" class="max-w-4xl mx-auto mb-16 relative">
+                <svg class="absolute -top-6 -left-8 w-16 h-16 text-warmBrown/10 transform -scale-x-100" fill="currentColor" viewBox="0 0 24 24"><path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z"/></svg>
+                <p class="text-2xl text-warmBrown/80 leading-relaxed font-semibold text-center italic relative z-10">
+                    "In Silicon Valley, judges respect a founder who acknowledges risks but has already built the <span class="text-sunrise font-bold">safety net</span> for them."
+                </p>
+            </div>
+
+            <div data-aos="fade-up" data-aos-delay="200" class="max-w-4xl mx-auto space-y-4">
+                <div class="glass-card rounded-[1.5rem] overflow-hidden">
+                    <button onclick="toggleFaq(1)" class="w-full px-8 py-6 text-left flex justify-between items-center hover:bg-white/40 transition">
+                        <h3 class="text-xl md:text-2xl font-bold text-warmBrown flex items-center gap-3 pr-4">
+                            <span class="text-sunrise text-3xl shrink-0">Q1:</span> "Why Blockchain? Isn't a standard database enough?"
+                        </h3>
+                        <svg id="icon-1" class="w-8 h-8 text-sunrise shrink-0 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                    </button>
+                    <div id="content-1" class="hidden px-8 pb-8 pt-2">
+                        <div class="w-full h-px bg-warmBrown/10 mb-4"></div>
+                        <p class="text-lg text-warmBrown/90 leading-relaxed font-medium">
+                            <strong class="text-sunrise uppercase tracking-wide text-sm block mb-2">Trust & Audit</strong>
+                            "A database handles records, but <span class="font-bold text-warmBrown">Blockchain handles Trust</span>. In a high-volume, automated ecosystem with zero human oversight, we need <span class="font-bold text-warmBrown">Automated Dispute Resolution</span>. Our smart contracts ensure that if a locker fails or a temperature drops, the refund is instant and autonomous. We aren't just storing data; we are eliminating the administrative cost of 'Trust'—which is the biggest hidden tax in retail."
+                        </p>
+                    </div>
+                </div>
+
+                <div class="glass-card rounded-[1.5rem] overflow-hidden">
+                    <button onclick="toggleFaq(2)" class="w-full px-8 py-6 text-left flex justify-between items-center hover:bg-white/40 transition">
+                        <h3 class="text-xl md:text-2xl font-bold text-warmBrown flex items-center gap-3 pr-4">
+                            <span class="text-sageGreen text-3xl shrink-0">Q2:</span> "How do you handle the 'Last Mile' of food quality?"
+                        </h3>
+                        <svg id="icon-2" class="w-8 h-8 text-sageGreen shrink-0 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                    </button>
+                    <div id="content-2" class="hidden px-8 pb-8 pt-2">
+                        <div class="w-full h-px bg-warmBrown/10 mb-4"></div>
+                        <p class="text-lg text-warmBrown/90 leading-relaxed font-medium">
+                            "We don’t cook; we optimize the flow. Our AI treats food as a <span class="font-bold text-warmBrown">'high-velocity asset.'</span> By using predictive edge computing, we sync with local kitchen partners to ensure the 'Locker-Stay' time is <span class="font-bold text-warmBrown">under 15 minutes</span>. We are solving the Idle Time problem. We don't just provide a box; we provide a precision-timed delivery window."
+                        </p>
+                    </div>
+                </div>
+
+                <div class="glass-card rounded-[1.5rem] overflow-hidden">
+                    <button onclick="toggleFaq(3)" class="w-full px-8 py-6 text-left flex justify-between items-center hover:bg-white/40 transition">
+                        <h3 class="text-xl md:text-2xl font-bold text-warmBrown flex items-center gap-3 pr-4">
+                            <span class="text-amberGlow text-3xl shrink-0">Q3:</span> "The hardware is expensive to scale. Margin protection?"
+                        </h3>
+                        <svg id="icon-3" class="w-8 h-8 text-amberGlow shrink-0 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                    </button>
+                    <div id="content-3" class="hidden px-8 pb-8 pt-2">
+                        <div class="w-full h-px bg-warmBrown/10 mb-4"></div>
+                        <p class="text-lg text-warmBrown/90 leading-relaxed font-medium">
+                            "Our model is <span class="font-bold text-warmBrown">Asset-Light</span>. We partner with existing real estate owners—transit hubs and office lobbies—who have underutilized 'dead space.' By turning 10 square feet of dead space into a <span class="font-bold text-warmBrown">high-margin revenue node</span>, we create a win-win. Our tech stack is the 'Brain'; the lockers are just the nodes."
+                        </p>
+                    </div>
+                </div>
+
+                <div class="glass-card rounded-[1.5rem] overflow-hidden">
+                    <button onclick="toggleFaq(4)" class="w-full px-8 py-6 text-left flex justify-between items-center hover:bg-white/40 transition">
+                        <h3 class="text-xl md:text-2xl font-bold text-warmBrown flex items-center gap-3 pr-4">
+                            <span class="text-sageGreen text-3xl shrink-0">Q4:</span> "What if the user's phone dies or the AI glitches?"
+                        </h3>
+                        <svg id="icon-4" class="w-8 h-8 text-sageGreen shrink-0 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                    </button>
+                    <div id="content-4" class="hidden px-8 pb-8 pt-2">
+                        <div class="w-full h-px bg-warmBrown/10 mb-4"></div>
+                        <p class="text-lg text-warmBrown/90 leading-relaxed font-medium">
+                            "<span class="font-bold text-warmBrown">Fail-safes are built into our DNA.</span> Every locker has a secondary Biometric or Offline Token backup linked to the blockchain. Because the payment is settled via smart contract <span class="font-bold text-warmBrown">before the user arrives</span>, the locker knows exactly who is coming, even if the 'Cloud' goes down."
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="team" data-aos="fade-up" class="text-center scroll-mt-28 pb-20">
+            <h2 class="text-5xl font-bold mb-8 text-warmBrown">Meet the "Coffee chain" Team</h2>
+            <p class="text-2xl text-warmBrown/80 max-w-3xl mx-auto mb-14 leading-relaxed font-medium">
+                We are a technical team from NKUST (National Kaohsiung University of Science and Technology), specializing in Information Management, AI integrations, and XRPL Application development.
+            </p>
+            <div class="flex flex-wrap justify-center gap-8">
+                <div class="glass-card px-10 py-5 rounded-full font-bold text-2xl text-sageGreen shadow-md">Yi-Le Liou</div>
+                <div class="glass-card px-10 py-5 rounded-full font-bold text-2xl text-sunrise shadow-md">Ho-Feng Chiu</div>
+                <div class="glass-card px-10 py-5 rounded-full font-bold text-2xl text-amberGlow shadow-md">Yu-Hung Cheng</div>
+                <div class="glass-card px-10 py-5 rounded-full font-bold text-2xl text-warmBrown shadow-md">Kelly Huang</div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="w-full py-12 text-center relative border-t-2 border-warmBrown/10">
+        <p class="text-warmBrown font-bold tracking-widest text-lg uppercase">
+            NKUST XRPL Student Club
+        </p>
+    </footer>
+
+    <a href="#team" class="fixed bottom-6 right-6 z-50 bg-white/70 backdrop-blur-md px-3 py-3 md:px-4 md:py-2 rounded-full flex items-center gap-3 hover:-translate-y-1 transition-all duration-300 shadow-xl border border-white/80 group cursor-pointer">
+        <div class="w-8 h-8 md:w-9 md:h-9 bg-sunrise rounded-full flex items-center justify-center text-white font-bold shadow-inner overflow-hidden shrink-0">
+            <img src="team_logo.jpg" alt="Team Logo" class="w-full h-full object-cover">
+        </div>
+        <div class="hidden md:block pr-2">
+            <p class="text-xs text-warmBrown/60 font-bold uppercase tracking-wider leading-none mb-0.5">Built by</p>
+            <p class="text-sm font-bold text-warmBrown group-hover:text-sunrise transition leading-none">Team Coffee chain</p>
+        </div>
+    </a>
+
+
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        // 初始化動畫
+        AOS.init({ once: false, mirror: true, offset: 100, duration: 800, easing: 'ease-out-cubic' });
+
+        // FAQ Toggle 邏輯
+        function toggleFaq(id) {
+            const content = document.getElementById('content-' + id);
+            const icon = document.getElementById('icon-' + id);
+            content.classList.toggle('hidden');
+            icon.classList.toggle('rotate-180');
+        }
+
+        // Init Stage Toggle 邏輯 (包含陰影處理)
+        function switchInit(step) {
+            document.querySelectorAll('.init-view').forEach(view => {
+                view.style.opacity = '0';
+                view.style.transform = 'scale(0.95)';
+                view.style.pointerEvents = 'none';
+            });
+            const activeView = document.getElementById('init-' + step);
+            activeView.style.opacity = '1';
+            activeView.style.transform = 'scale(1)';
+            activeView.style.pointerEvents = 'auto';
+
+            for (let i = 1; i <= 3; i++) {
+                const btn = document.getElementById('btn-init-' + i);
+                if (i === step) {
+                    btn.classList.add('bg-sunrise', 'text-white', 'shadow-md');
+                    btn.classList.remove('text-warmBrown/50', 'hover:bg-white/50');
+                } else {
+                    btn.classList.remove('bg-sunrise', 'text-white', 'shadow-md');
+                    btn.classList.add('text-warmBrown/50', 'hover:bg-white/50');
+                }
+            }
+        }
+
+        // 新增的影片播放與控制列邏輯
+        function startVideo(videoId, btnId) {
+            const video = document.getElementById(videoId);
+            const playButton = document.getElementById(btnId);
+            
+            // 開啟原生控制列 (進度條、音量等)
+            video.controls = true;
+            
+            // 播放影片
+            video.play();
+            
+            // 完全隱藏我們的自訂中央播放按鈕，避免干擾點擊
+            playButton.style.display = 'none';
+        }
+    </script>
+</body>
+</html>
